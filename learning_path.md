@@ -1,4 +1,4 @@
-# Beginner Level (Weeks 1-2):
+## Beginner Level (Weeks 1-2):
 1. *Days 1-3: Basic SQL Fundamentals*
    - Learn simple SELECT queries with filtering.
    - Practice INNER and LEFT JOIN operations.
@@ -12,7 +12,7 @@
    - Explore the use of UNIONs to combine results.
    - Review and reinforce the basic concepts learned.
 
-# Intermediate Level (Weeks 3-6):
+## Intermediate Level (Weeks 3-6):
 1. *Days 11-14: CTEs and Temp Tables*
    - Learn and practice Common Table Expressions (CTEs).
    - Explore the use of temporary tables.
@@ -33,7 +33,7 @@
    - Review all intermediate concepts.
    - Practice combining multiple skills in complex queries.
 
-# Advanced Level (Weeks 7-10):
+## Advanced Level (Weeks 7-10):
 1. *Days 31-34: PIVOT, Recursion, Correlated Subqueries*
    - Learn advanced data manipulation techniques, including PIVOT.
    - Understand recursion and use correlated subqueries.
