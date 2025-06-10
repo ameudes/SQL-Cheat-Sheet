@@ -54,27 +54,48 @@ WHERE salary > (
 
 ## 4. Window Functions & Ranking
 ### 4.1. DENSE_RANK() vs RANK()
+- RANK() skips positions after ties (so after two “1”s you get “3”).
+- DENSE_RANK() does not skip (so after two “1”s you get “2”).
+
+Eg:
 ```sql
-SELECT value,
-       DENSE_RANK() OVER (ORDER BY value DESC) AS dense_rank,
-       RANK()       OVER (ORDER BY value DESC) AS rank
+WITH scores AS (
+  SELECT UNNEST(ARRAY[90, 90, 88, 88, 81, 80, 80, 79]) AS mark
+)
+SELECT
+  mark,
+  RANK() OVER (ORDER BY mark DESC)   AS rank,
+  DENSE_RANK() OVER (ORDER BY mark DESC)   AS dense_rank
 FROM scores;
 ```
+The result :
+| mark | rank | dense_rank |
+| ---- | ---- | ----------- |
+| 90   | 1    | 1           |
+| 90   | 1    | 1           |
+| 88   | 3    | 2           |
+| 88   | 3    | 2           |
+| 81   | 5    | 3           |
+| 80   | 6    | 4           |
+| 80   | 6    | 4           |
+| 79   | 8    | 5           |
+
 
 ### 4.2. Aggregates Over Partitions
+When you use a regular aggregate (e.g. SUM(), AVG()) in SQL, you normally get a single result for the entire dataset or one result per GROUP BY bucket. A window function lets you “peek” that same aggregate at every row without collapsing your results.
+- PARTITION BY (optional) splits the rows into separate groups, each partition gets its own aggregate calculation.
+- ORDER BY (optional, inside the window) defines row order within each partition and enables running or cumulative calculations (e.g. running total).
+
+Important: if you include ORDER BY in your window, the aggregate at each row is computed over all prior rows in its partition (plus any ties), rather than over the entire partition. This is how you get true running sums, moving averages, and other “over-time” insights without losing the context of each individual row.
+
 ```sql
-SELECT depname,
-       empno,
-       salary,
-       AVG(salary) OVER (
+SELECT depname, empno, salary, AVG(salary)
+OVER (
          PARTITION BY depname
          [ORDER BY salary]
-       ) AS avg_salary
+     ) AS avg_salary
 FROM empsalary;
 ```
-- PARTITION BY: divides rows into groups
-- ORDER BY (inside OVER): defines order for cumulative calculations
-
 ## 5. Common Table Expressions (CTEs)
 ### 5.1. Simple CTE
 ```sql
@@ -224,6 +245,7 @@ GROUP BY t1.a, t2.b
 HAVING SUM(t1.c) > 100
 ORDER BY total DESC
 LIMIT 20 OFFSET 10;
-
 ```
-  
+
+
+
