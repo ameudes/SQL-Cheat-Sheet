@@ -123,7 +123,7 @@ GROUP BY category;
 ```
 
 ## 7. LATERAL JOIN
-Useful for querying hierarchical or related row sets. Here is a quick overview : 
+Useful for querying hierarchical or related row sets. Here is a quick overview : https://www.cybertec-postgresql.com/en/understanding-lateral-joins-in-postgresql/ 
 
 
 ## 8. NULL Handling
