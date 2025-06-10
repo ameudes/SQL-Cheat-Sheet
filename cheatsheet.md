@@ -29,6 +29,8 @@ LIMIT 10;
 ```
 
 ## 3. Subqueries
+Simple subqueries let you use the result of one query (like an average) inside another to filter or compute values.Correlated subqueries go a step further by referring to columns from the outer query, recalculating the inner query for each row of the outer result. It is perfect for comparing each row against a group-specific aggregate.
+
 ### 3.1. Simple Subquery
 ```sql
 SELECT *
@@ -96,7 +98,11 @@ OVER (
      ) AS avg_salary
 FROM empsalary;
 ```
+![SQL](https://github.com/user-attachments/assets/fe68dbf3-393e-4b3e-8ff7-b2c43c027c77)
+
 ## 5. Common Table Expressions (CTEs)
+Common Table Expressions (CTEs) let you name a subquery at the top of your SQL statement for cleaner, reusable logic. A simple CTE defines a one-time result set you can join or filter against, while a recursive CTE combines an initial “base” query with a self-referencing query to traverse hierarchies or perform iterative calculations.
+
 ### 5.1. Simple CTE
 ```sql
 WITH cte_dept AS (
@@ -160,6 +166,8 @@ FROM my_table;
 ## 9. VIEWS
 - VIEW: stores query definition; always returns up-to-date data
 - MATERIALIZED VIEW: stores query result; must be manually refreshed
+
+A VIEW is a saved SQL query that runs on demand, every time you select from it, the database executes the underlying query and returns fresh, up-to-date results. This ensures you always see the latest data, but complex or large queries can incur a performance cost each time they’re run. A MATERIALIZED VIEW solves this by storing not only the query definition but also its result set. Reads are fast because you’re querying precomputed data, making it ideal for heavy reports or dashboards. The trade-off is that you must refresh the materialized view explicitly whenever you need to sync it with the base tables.
 
 ```sql
 -- Standard view
