@@ -137,7 +137,7 @@ FROM cte_tree;
 ## 6. Pivoting (PostgreSQL)
 PostgreSQL has no native PIVOT. Use:
 - CASE statements
-- creetab function (enable extension tablefunc)
+- crosstab function (enable extension tablefunc)
 
 ```sql
 -- CASE example
@@ -238,21 +238,6 @@ RENAME TO new_table_name;
 DROP TABLE IF EXISTS MyTable;
 ```
 
-
-## 11. Advanced Query Patterns
-- Aggregations with GROUP BY + HAVING
-- Multiple joins and filters
-- Pagination using LIMIT … OFFSET …
-
-```sql
-SELECT t1.a, t2.b, SUM(t1.c) AS total
-FROM db1.table1 t1
-JOIN db2.table2 t2 ON t1.id = t2.ref_id
-WHERE t1.flag = TRUE
-GROUP BY t1.a, t2.b
-HAVING SUM(t1.c) > 100
-ORDER BY total DESC
-LIMIT 20 OFFSET 10;
 ```
 
 
